@@ -52,11 +52,29 @@ const displayPhones = (phones, isShowAll) =>{
 
 // show details for modal
 const handleShowDetail = async (id) =>{
-    console.log('clicked show details',id,);
+    // console.log('clicked show details',id,);
     // load single phone data
     const res = await fetch(`https://openapi.programming-hero.com/api/phone/samsung_galaxy_s22_5g-11253`);
     const data = await res.json();
-    console.log(data,);
+
+    const phone = data.data;
+    showPhoneDetails(phone);
+}
+
+const showPhoneDetails = (phone) =>{
+    console.log(phone);
+    const phoneName = document.getElementById('show-detail-phone-name');
+    phoneName.innerText = phone.name;
+
+    const showDetailsContainer = document.getElementById('show-detail-container');
+    
+    showDetailsContainer.innerHTML=`
+    <img src="${phone.image}" alt=""/>
+    <p><span>Storage:</span>${phone?.mainFeatures?.storage}</p>
+    <p><span>GPS:</span>${phone?.others?.GPS || 'No GPS'}</p>
+    `
+    // show the modal
+    show_details_modal.showModal();
 }
 
 
